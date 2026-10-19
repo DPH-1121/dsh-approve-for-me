@@ -1,0 +1,49 @@
+# dsh-approve-for-me bundle patch
+#
+# 这个包里有两件事：
+#
+# 1. 覆盖官方的 `permission` 行，在三个预设之外登记第四种。
+#    预设是「沙箱模式 × 审批策略」的二元组，官方三个已经用掉
+#       read-only         + ask
+#       workspace-write   + ask
+#       danger-full-access+ never
+#    四种组合里只剩 `danger-full-access + ask`，所以「替我审批」只能建在它上面。
+#    这不是权宜之计而是必然：既然沙箱不再拦，判定就必须由本插件的规则表来做，
+#    而 `ask` 正是让规则表拿到决定权的那一半（`never` 会在瀑布之前就把一切拒了）。
+#
+#    ★ patch 是整块替换 `config`，不是深合并。所以官方那三个预设必须原样重述，
+#      否则它们会消失。同理，官方以后改这三个的值，这一层会覆盖回去。
+#
+# 2. 插入本包自己的宿主半，它负责在 `approval/request` 与 `tools/pre-execute`
+#    两个瀑布上按规则表作答。
+#
+# 三个 id 不要混：
+#   - id:   loader 行 id，只用于 patch 定位 / 禁用，可任意起但必须唯一；
+#   - name: 必须是真实包名 dsh-approve-for-me —— 启动图行 id 与注册键；
+#   - 预设的 key（approve-for-me）由下面的 config 与 lib/index.js 共同约定。
+- id: permission
+  name: '@deepseek-ai/dsh-permission-presets'
+  config:
+    presets:
+      read-only:
+        sandbox: read-only
+        approval: ask
+      workspace-write:
+        sandbox: workspace-write
+        approval: ask
+      danger-full-access:
+        sandbox: danger-full-access
+        approval: never
+      approve-for-me:
+        sandbox: danger-full-access
+        approval: ask
+        name: Approve for me
+        description: >-
+          Full file access, but every approval this session would have raised is
+          answered by a deterministic rule table: known-safe calls run, known-risky
+          calls are refused with a reason, and anything the table cannot classify still
+          asks you.
+
+- insert:
+    - id: approve-for-me
+      name: 'dsh-approve-for-me'

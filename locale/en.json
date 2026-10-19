@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Approve for me",
+    "description": "A fourth permission preset: keeps the workspace sandbox and answers approval requests with a deterministic Codex-style rule table (allow / prompt / deny) instead of asking about everything or trusting everything."
+  }
+}

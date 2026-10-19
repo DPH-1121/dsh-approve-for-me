@@ -1,0 +1,54 @@
+{
+  "name": "dsh-approve-for-me",
+  "version": "0.1.0",
+  "description": "Approve for me: a fourth DeepSeek Harness permission preset that keeps the workspace sandbox and answers approval asks with a deterministic Codex-style rule table — allow, prompt, or deny.",
+  "type": "module",
+  "license": "MIT",
+  "author": "HaydenSmith1121",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DPH-1121/dsh-approve-for-me.git"
+  },
+  "homepage": "https://github.com/DPH-1121/dsh-approve-for-me#readme",
+  "bugs": {
+    "url": "https://github.com/DPH-1121/dsh-approve-for-me/issues"
+  },
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0",
+    "dsh": ">=0.2.0-rc.1 <0.3.0-0"
+  },
+  "main": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./rules": "./lib/rules.js",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "lib",
+    "locale",
+    "cordis.patch.yml",
+    "icon.svg",
+    "README.md",
+    "LICENSE"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "scripts": {
+    "test": "node --test test/*.mjs"
+  },
+  "keywords": [
+    "deepseek-harness",
+    "dsh-plugin",
+    "dsh",
+    "approval",
+    "permission",
+    "sandbox",
+    "codex",
+    "cordis"
+  ]
+}
