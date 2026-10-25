@@ -1,6 +1,6 @@
 {
   "name": "dsh-approve-for-me",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Approve for me: a fourth DeepSeek Harness permission preset that keeps the workspace sandbox and answers approval asks with a deterministic Codex-style rule table — allow, prompt, or deny.",
   "type": "module",
   "license": "MIT",
